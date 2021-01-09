@@ -228,7 +228,16 @@ class FFmpegPostProcessor(PostProcessor):
         if self._downloader.params.get('verbose', False):
             self._downloader.to_screen('[debug] ffmpeg command line: %s' % shell_quote(cmd))
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
-        stdout, stderr = p.communicate()
+#         stdout, stderr = p.communicate()
+        
+        while True:
+           out = p.stderr.read(1)
+           if out == '' and p.poll() != None:
+             break
+           if out != '':
+             sys.stdout.write(out)
+             sys.stdout.flush()
+        
         if p.returncode != 0:
             stderr = stderr.decode('utf-8', 'replace')
             msg = stderr.strip().split('\n')[-1]
