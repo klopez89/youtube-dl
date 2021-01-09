@@ -231,6 +231,8 @@ class FFmpegPostProcessor(PostProcessor):
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
         stdout, stderr = p.communicate()
         
+        child = subprocess.Popen(command, shell=True, stderr=subprocess.PIPE)
+        
         while True:
             out = p.stderr.read(1)
             if out == '' and p.poll() != None:
