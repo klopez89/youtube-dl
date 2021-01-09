@@ -5,7 +5,7 @@ import os
 import subprocess
 import time
 import re
-import sys
+# import sys
 
 
 from .common import AudioConversionError, PostProcessor
